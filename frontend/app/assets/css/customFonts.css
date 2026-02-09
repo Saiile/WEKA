@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'HomeVideo';
+  src: url('~/assets/fonts/HomeVideo-BLG6G.ttf') format('woff2');
+}
+
+@font-face {
+  font-family: 'HomeVideoBold';
+  src: url('~/assets/fonts/HomeVideoBold-R90Dv.ttf') format('woff2');
+}
+

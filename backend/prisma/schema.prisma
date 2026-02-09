@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model channels {
+  id           BigInt     @id @default(autoincrement())
+  server_id    BigInt?
+  created_at   DateTime   @default(now()) @db.Timestamptz(6)
+  channel_name String     @default("")
+  servers      servers?   @relation(fields: [server_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  messages     messages[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model messages {
+  id         BigInt   @id @default(autoincrement())
+  channel_id BigInt
+  user_id    BigInt?
+  content    String?
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  channels   channels @relation(fields: [channel_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users?   @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model servermembers {
+  id        BigInt   @id @default(autoincrement())
+  server_id BigInt
+  user_id   BigInt
+  joined_at DateTime @default(now()) @db.Timestamp(6)
+  status    Int      @default(0) @db.SmallInt
+  role      role?    @default(User)
+  servers   servers  @relation(fields: [server_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users     users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model servers {
+  id            BigInt          @id(map: "server_pkey") @default(autoincrement())
+  name          String
+  owner_id      BigInt
+  created_at    DateTime        @default(now()) @db.Timestamptz(6)
+  channels      channels[]
+  servermembers servermembers[]
+  users         users           @relation(fields: [owner_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model users {
+  id            BigInt          @id(map: "Users_pkey") @default(autoincrement())
+  email         String          @unique(map: "Users_email_key")
+  username      String
+  password      String
+  created_at    DateTime        @default(now()) @db.Timestamptz(6)
+  messages      messages[]
+  servermembers servermembers[]
+  servers       servers[]
+}
+
+enum role {
+  Admin
+  Mod
+  User
+}

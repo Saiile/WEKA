@@ -1,0 +1,145 @@
+html, body{
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    font-family: HomeVideo;
+    /* cursor: url('/cursor/cursor.png') 8 8, pointer;*/
+}
+
+button{
+  cursor: pointer;
+}
+
+.pixel-corners,
+.pixel-corners--wrapper {
+  clip-path: polygon(0px calc(100% - 5px),
+    5px calc(100% - 5px),
+    5px 100%,
+    calc(100% - 5px) 100%,
+    calc(100% - 5px) calc(100% - 5px),
+    100% calc(100% - 5px),
+    100% 5px,
+    calc(100% - 5px) 5px,
+    calc(100% - 5px) 0px,
+    5px 0px,
+    5px 5px,
+    0px 5px);
+  position: relative;
+}
+.pixel-corners {
+  border: 5px solid transparent;
+}
+.pixel-corners--wrapper {
+  width: fit-content;
+  height: fit-content;
+}
+.pixel-corners--wrapper .pixel-corners {
+  display: block;
+  clip-path: polygon(5px 5px,
+    calc(100% - 5px) 5px,
+    calc(100% - 5px) calc(100% - 5px),
+    5px calc(100% - 5px));
+}
+.pixel-corners::after,
+.pixel-corners--wrapper::after {
+  content: "";
+  position: absolute;
+  clip-path: polygon(0px calc(100% - 5px),
+    5px calc(100% - 5px),
+    5px 100%,
+    calc(100% - 5px) 100%,
+    calc(100% - 5px) calc(100% - 5px),
+    100% calc(100% - 5px),
+    100% 5px,
+    calc(100% - 5px) 5px,
+    calc(100% - 5px) 0px,
+    5px 0px,
+    5px 5px,
+    0px 5px,
+    0px 50%,
+    5px 50%,
+    5px 5px,
+    calc(100% - 5px) 5px,
+    calc(100% - 5px) calc(100% - 5px),
+    5px calc(100% - 5px),
+    5px 50%,
+    0px 50%);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #000000;
+  display: block;
+  pointer-events: none;
+}
+.pixel-corners::after {
+  margin: -5px;
+}
+
+input{
+    background-color: white;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+    font-family: HomeVideo ;
+    font-size: small;
+
+}
+
+input[type="text"]:focus, input[type="password"]:hover{
+    outline: 2px solid #8b6d9c;
+}
+
+input[type="submit"]{
+    cursor: pointer;
+    transition: 0.1s all;
+}
+
+input[type="submit"]:hover{
+    scale: 0.9;
+    
+}
+
+input[type="button"]{
+    cursor: pointer;
+    transition: 0.1s all;
+}
+
+input[type="button"]:hover{
+    scale: 0.9;
+    
+}
+
+.popupIn{
+  animation: popupIn 0.3s ease forwards;
+}
+
+@keyframes popupIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.popupOut{
+  animation: popupOut 0.3s ease forwards;
+}
+
+@keyframes popupOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
